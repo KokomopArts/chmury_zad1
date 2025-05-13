@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aplikacja Chmury</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  />
+  <style>
+    #map { height: 600px; margin-top: 1rem}
+    form { margin-top: 1rem; font-size: 1.5rem}
+    label { margin-right: 1rem; font-size: 1.5rem}
+    input {font-size: 1.2rem}
+    select {font-size: 1.2rem}
+
+  </style>
+</head>
+<body>
+
+  <label for="city-select">Wybierz miasto:</label>
+  <select id="city-select">
+    <option value="">-- wybierz --</option>
+    <option value="Lublin">Lublin</option>
+    <option value="Warszawa">Warszawa</option>
+    <option value="Krakow">Kraków</option>
+    <option value="Londyn">Londyn</option>
+    <option value="New York">New York</option>
+    <option value="Sanok">Sanok</option>
+  </select>
+
+  <div id="map"></div>
+
+<form id="coords-form">
+  <label>
+    Szerokość geogr.:
+    <input type="text" id="lat" name="latitude" readonly />
+  </label>
+  <label>
+    Długość geogr.:
+    <input type="text" id="lng" name="longitude" readonly />
+  </label>
+  <label>
+    Temperatura (°C):
+    <input type="text" id="temperature" name="temperature" readonly />
+  </label>
+  <label>
+    Prędkość wiatru (km/h):
+    <input type="text" id="wind_speed" name="wind_speed" readonly />
+  </label>
+</form>
+
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="map.js"></script>
+</body>
+</html>
