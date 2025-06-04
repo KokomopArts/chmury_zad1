@@ -73,12 +73,12 @@ jobs:
           image-ref: ${{ steps.meta.outputs.tags }}
 
           format: table
+          exit-code: '1'
           ignore-unfixed: true
           vuln-type: os,library
           severity: CRITICAL,HIGH
 
       - name: Push image (amd64)
-        if: ${{ success() }}
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -110,12 +110,12 @@ jobs:
           image-ref: ${{ steps.meta.outputs.tags }}
 
           format: table
+          exit-code: '1'
           ignore-unfixed: true
           vuln-type: os,library
           severity: CRITICAL,HIGH
 
       - name: Push image (arm64)
-        if: ${{ success() }}
         uses: docker/build-push-action@v5
         with:
           context: .
