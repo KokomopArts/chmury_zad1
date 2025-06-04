@@ -78,19 +78,6 @@ jobs:
           vuln-type: os,library
           severity: CRITICAL,HIGH
 
-      - name: Push image (amd64)
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          platforms: linux/amd64
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
-          cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
-
-
-
 
       - name: Build (arm64)
         id: build_arm64
@@ -115,13 +102,14 @@ jobs:
           vuln-type: os,library
           severity: CRITICAL,HIGH
 
-      - name: Push image (arm64)
+
+
+      - name: Build and Push image (amd64 and arm64)
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64
-          push: true
+          platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
           cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
