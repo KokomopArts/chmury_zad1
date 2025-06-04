@@ -56,7 +56,7 @@ jobs:
 
 
       - name: Build (amd64)
-        id: build
+        id: build_amd64
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -93,7 +93,7 @@ jobs:
 
 
       - name: Build (arm64)
-        id: build
+        id: build_arm64
         uses: docker/build-push-action@v5
         with:
           context: .
