@@ -114,6 +114,17 @@ jobs:
           push: true
           cache-from: type=local,src=./docker-cache/
           cache-to: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache,mode=max
-          tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
+
+
+      - name: Push image with tag latest
+        uses: docker/build-push-action@v5
+        id: push-latest
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          cache-from: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache
+
+          tags: ghcr.io/${{ github.repository }}:latest
