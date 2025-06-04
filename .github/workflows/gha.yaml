@@ -64,7 +64,7 @@ jobs:
           cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
 
       - name: Scan image (Trivy)
-        uses: aquasecurity/trivy-action@v0.31.0
+        uses: aquasecurity/trivy-action@0.31.0
         with:
           image-ref: ghcr.io/${{ github.repository }}:${{ steps.meta.outputs.tags }}
 
