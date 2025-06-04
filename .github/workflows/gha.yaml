@@ -64,7 +64,7 @@ jobs:
           platforms: linux/amd64
           load: true
           cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache
-          cache-to: type=local,dest=./docker-cache/ , mode=max
+          cache-to: type=local,dest=./docker-cache/,mode=max
           tags: temp_image_amd64
 
       - name: Scan image with Trivy (amd64)
@@ -88,7 +88,7 @@ jobs:
           platforms: linux/arm64
           load: true
           cache-from: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache
-          cache-to: type=local,dest=./docker-cache/ , mode=max
+          cache-to: type=local,dest=./docker-cache/,mode=max
           tags: temp_image_arm64
 
 
@@ -111,6 +111,5 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           cache-from: type=local,src=./docker-cache/
-          cache-to: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache , mode=max
-
+          cache-to: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache,mode=max
           tags: ${{ steps.meta.outputs.tags }}
