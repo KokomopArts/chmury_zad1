@@ -63,7 +63,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           load: true
-          tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache
           cache-to: type=local,dest='/docker-cache/',mode=max
           tags: temp_image_amd64
@@ -88,7 +87,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/arm64
           load: true
-          tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache
           cache-to: type=local,dest='/docker-cache/',mode=max
           tags: temp_image_arm64
