@@ -31,7 +31,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}
-          flavor: latest=false
+          flavor: latest=true
           tags: |
             type=sha,priority=100,prefix=sha-,format=short
             type=semver,priority=200,pattern={{version}}
@@ -114,6 +114,4 @@ jobs:
           push: true
           cache-from: type=local,src=./docker-cache/
           cache-to: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache,mode=max
-          tags: |
-            ghcr.io/${{ github.repository }}:latest
-            ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
