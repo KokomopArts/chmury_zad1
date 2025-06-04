@@ -58,7 +58,7 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: false
+          load: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
           cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
