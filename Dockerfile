@@ -1,5 +1,5 @@
 #build
-FROM node:20-alpine AS builder
+FROM node:lts-alpine3.22 AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -7,7 +7,7 @@ COPY index.js ./
 COPY ./public ./public
 
 #runtime
-FROM node:20-alpine
+FROM node:lts-alpine3.22
 
 COPY --from=builder /app /app
 
