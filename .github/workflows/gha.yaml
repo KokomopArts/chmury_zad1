@@ -64,13 +64,14 @@ jobs:
           platforms: linux/amd64
           load: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
-          cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
+          cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache
+          cache-to: type=local,dest='/docker-cache/',mode=max
+          tags: temp_image_amd64
 
       - name: Scan image with Trivy (amd64)
         uses: aquasecurity/trivy-action@0.31.0
         with:
-          image-ref: ${{ steps.meta.outputs.tags }}
+          image-ref: temp_image_amd64
 
           format: table
           exit-code: '1'
@@ -88,13 +89,15 @@ jobs:
           platforms: linux/arm64
           load: true
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
-          cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
+          cache-from: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache
+          cache-to: type=local,dest='/docker-cache/',mode=max
+          tags: temp_image_arm64
+
 
       - name: Scan image with Trivy (arm64)
         uses: aquasecurity/trivy-action@0.31.0
         with:
-          image-ref: ${{ steps.meta.outputs.tags }}
+          image-ref: temp_image_arm64
 
           format: table
           exit-code: '1'
@@ -111,5 +114,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
-          cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
-          cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
+          cache-from: type=local,dest='/docker-cache/'
+          cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/chmury_2-cache:cache
+          tags: ${{ steps.meta.outputs.tags }}
