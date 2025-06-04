@@ -51,19 +51,23 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
 
-      - name: Build (multi-arch, cache)
+
+
+
+
+      - name: Build (amd64)
         id: build
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           load: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
           cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
 
-      - name: Scan image (Trivy)
+      - name: Scan image with Trivy (amd64)
         uses: aquasecurity/trivy-action@0.31.0
         with:
           image-ref: ${{ steps.meta.outputs.tags }}
@@ -73,13 +77,50 @@ jobs:
           vuln-type: os,library
           severity: CRITICAL,HIGH
 
-      - name: Push image (to GHCR)
+      - name: Push image (amd64)
         if: ${{ success() }}
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
+          cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
+
+
+
+
+      - name: Build (arm64)
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/arm64
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
+          cache-to: type=registry,mode=max,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
+
+      - name: Scan image with Trivy (arm64)
+        uses: aquasecurity/trivy-action@0.31.0
+        with:
+          image-ref: ${{ steps.meta.outputs.tags }}
+
+          format: table
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: CRITICAL,HIGH
+
+      - name: Push image (arm64)
+        if: ${{ success() }}
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           cache-from: type=registry,ref=${{ vars.DOCKERHUB_USERNAME }}/zad1-cache:latest
